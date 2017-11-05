@@ -34,4 +34,12 @@ void poisson_disk(float radius,
                   std::vector<Vec3>& samples_pos,
                   std::vector<Vec3>& samples_nor);
 
+void poisson_disk_raw(
+                  int nb_samples,
+                  const float *pVerts,
+                  const int nVerts,
+                  const int *pTris,
+                  const int nTris,
+                  std::vector<float>& sampled_pos);
+
 }// END UTILS_SAMPLING NAMESPACE ===============================================

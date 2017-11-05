@@ -47,4 +47,38 @@ void poisson_disk(float radius,
 
 }
 
+void poisson_disk_raw(
+                  int nb_samples,
+                  const float *pVerts,
+                  const int nVerts,
+                  const int *pTris,
+                  const int nTris,
+                  std::vector<float>& sampled_pos)
+{
+    assert(nVerts > 0);
+    assert(nTris > 0);
+
+    vcg::MyMesh vcg_mesh, sampler;
+    vcg_mesh.concat(pVerts, pTris, nVerts, nTris);
+    vcg_mesh.update_bb();
+
+    vcg::MyAlgorithms::Poison_setup pp;
+    pp._radius = -1;
+    pp._nb_samples = nb_samples;
+    pp._approx_geodesic_dist = true;
+    vcg::MyAlgorithms::poison_disk_sampling(vcg_mesh, pp, sampler);
+
+    const int nb_vert = sampler.vert.size();
+    sampled_pos.clear();
+    sampled_pos.resize( nb_vert*3 );
+    vcg::MyMesh::VertexIterator vi = sampler.vert.begin();
+    for(int i = 0; i < nb_vert; i+=3, ++vi)
+    {
+        vcg::MyMesh::CoordType  p = (*vi).P();
+        sampled_pos[i+0] = p.X();
+        sampled_pos[i+1] = p.Y();
+        sampled_pos[i+2] = p.Z();
+    }
+}
+
 }// END UTILS_SAMPLING NAMESPACE ===============================================

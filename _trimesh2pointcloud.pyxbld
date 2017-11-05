@@ -1,3 +1,5 @@
+import numpy
+
 def make_ext(modname, pyxfilename):
     from distutils.extension import Extension
     return Extension(
@@ -9,6 +11,7 @@ def make_ext(modname, pyxfilename):
         ],
         language='c++',
         include_dirs=[
+            numpy.get_include(),
             './3rdparty/vcglib/',
             './3rdparty/poisson_disk_wrapper/'
         ],

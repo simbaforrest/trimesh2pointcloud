@@ -1,0 +1,17 @@
+def make_ext(modname, pyxfilename):
+    from distutils.extension import Extension
+    return Extension(
+        name=modname,
+        sources=[
+            './3rdparty/poisson_disk_wrapper/utils_sampling.cpp',
+            './3rdparty/poisson_disk_wrapper/vcg_mesh.cpp',
+            pyxfilename
+        ],
+        language='c++',
+        include_dirs=[
+            './3rdparty/vcglib/',
+            './3rdparty/poisson_disk_wrapper/'
+        ],
+        extra_compile_args=['-O3', '-fopenmp', '-w'],
+        extra_link_args=['-fopenmp']
+    )

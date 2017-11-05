@@ -72,12 +72,14 @@ void poisson_disk_raw(
     sampled_pos.clear();
     sampled_pos.resize( nb_vert*3 );
     vcg::MyMesh::VertexIterator vi = sampler.vert.begin();
-    for(int i = 0; i < nb_vert; i+=3, ++vi)
+//    printf("nb_vert=%d\n",nb_vert);
+    for(int i = 0; i < nb_vert; ++i, ++vi)
     {
         vcg::MyMesh::CoordType  p = (*vi).P();
-        sampled_pos[i+0] = p.X();
-        sampled_pos[i+1] = p.Y();
-        sampled_pos[i+2] = p.Z();
+        sampled_pos[i*3+0] = p.X();
+        sampled_pos[i*3+1] = p.Y();
+        sampled_pos[i*3+2] = p.Z();
+//        printf("%f %f %f\n", sampled_pos[i*3+0], sampled_pos[i*3+1], sampled_pos[i*3+2]);
     }
 }
 

@@ -138,7 +138,7 @@ void poison_disk_sampling(MyMesh& vcg_mesh,
     if(rad <= 0) rad     = vcg::tri::SurfaceSampling<MyMesh, MySampler>::ComputePoissonDiskRadius( vcg_mesh, nb_samp );
     else         nb_samp = vcg::tri::SurfaceSampling<MyMesh, MySampler>::ComputePoissonSampleNum ( vcg_mesh, rad     );
 
-    printf("Computing %i Poisson Samples for an expected radius of %f\n", nb_samp, rad);
+//    printf("Computing %i Poisson Samples for an expected radius of %f\n", nb_samp, rad);
 
     // first of all generate montecarlo samples for fast lookup
     MyMesh* presampledMesh = &vcg_mesh;
@@ -156,7 +156,7 @@ void poison_disk_sampling(MyMesh& vcg_mesh,
         montecarloMesh.bbox = vcg_mesh.bbox; // we want the same bounding box
         presampledMesh = &montecarloMesh;
 
-        printf("Generated %i Montecarlo Samples\n", montecarloMesh.vn);
+//        printf("Generated %i Montecarlo Samples\n", montecarloMesh.vn);
     }
 
 
@@ -177,8 +177,8 @@ void poison_disk_sampling(MyMesh& vcg_mesh,
         //vcg::tri::SurfaceSampling<MyMesh,MySampler>::PoissonDisk(vcg_mesh, mps, *presampledMesh, radius,pp);
 
         samples.update_bb();
-        printf("Sampling created a new mesh of %i points\n", samples.vn);
-        fflush(stdout);
+//        printf("Sampling created a new mesh of %i points\n", samples.vn);
+//        fflush(stdout);
     }
 
 }

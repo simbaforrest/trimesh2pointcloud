@@ -51,7 +51,12 @@ def _cy_trimesh2pointcloud(
 def cy_trimesh2pointcloud(V, G, k):
     V = np.require(V, dtype=np.float32, requirements=['C'])
     G = np.require(G, dtype=np.int32, requirements=['C'])
-    k2= int(1.1*k)
-    P = _cy_trimesh2pointcloud(V, G, k2)
+    k2= int(k)
+    while True:
+        P = _cy_trimesh2pointcloud(V, G, k2)
+        if P.shape[0]<k:
+            k2*=2
+        else:
+            break
     np.random.shuffle(P)
     return P[:k, :]

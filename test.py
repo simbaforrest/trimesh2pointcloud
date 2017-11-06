@@ -68,6 +68,7 @@ def main(args):
     print(V.shape)
     print(G.shape)
     P = tri2pts(V,G,2048)
+    print(P.shape)
     plt.figure()
     ax=plt.subplot(111,projection='3d')
     ax.plot(V[:,0],V[:,1],V[:,2],'b.')

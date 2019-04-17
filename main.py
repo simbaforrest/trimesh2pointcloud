@@ -46,21 +46,6 @@ def read_obj(fname):
     return vertices, faces
 
 
-def cmdline_args():
-    # Make parser object
-    p = argparse.ArgumentParser(description=
-        """
-        Use the command line argument parser in Python.
-        """,
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-
-    p.add_argument("-i", "--in_dir",
-                   help="input directory of all .obj files ")
-    p.add_argument("-o", "--out_dir",
-                   help="output directory of all .npy files ")
-    return(p.parse_args())
-
-
 def main():
     # V=np.array([
     #     [1,0,0],
@@ -95,7 +80,7 @@ def main():
     in_dir = args.in_dir
     out_dir = args.out_dir
     num_points = int(args.num_points)
-    
+
     # find all .obj files
     all_files = os.listdir(in_dir)
     all_obj = [x for x in all_files if x[-4:] == ".obj"]

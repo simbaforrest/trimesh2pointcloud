@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ed685d35-4534-48f6-aeb2-21ed90b03e4e" name="Default Changelist" comment="" />
+    <list default="true" id="ed685d35-4534-48f6-aeb2-21ed90b03e4e" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -13,8 +15,11 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="15" column="18" lean-forward="true" selection-start-line="15" selection-start-column="18" selection-end-line="15" selection-end-column="18" />
+            <state relative-caret-position="304">
+              <caret line="87" column="4" selection-start-line="87" selection-start-column="4" selection-end-line="87" selection-end-column="4" />
+              <folding>
+                <element signature="e#89#98#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -135,12 +140,12 @@
       <option name="presentableId" value="Default" />
       <updated>1556472199656</updated>
       <workItem from="1556472203920" duration="2000" />
-      <workItem from="1556472214892" duration="1074000" />
+      <workItem from="1556472214892" duration="1318000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1076000" />
+    <option name="totallyTimeSpent" value="1320000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="-4" width="1855" height="1084" extended-state="6" />
@@ -197,8 +202,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="15" column="18" lean-forward="true" selection-start-line="15" selection-start-column="18" selection-end-line="15" selection-end-column="18" />
+        <state relative-caret-position="304">
+          <caret line="87" column="4" selection-start-line="87" selection-start-column="4" selection-end-line="87" selection-end-column="4" />
+          <folding>
+            <element signature="e#89#98#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

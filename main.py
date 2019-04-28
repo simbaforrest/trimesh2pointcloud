@@ -44,6 +44,18 @@ def read_obj(fname):
     return vertices, faces
 
 
+def log_error(error_log, f):
+    """
+    log error to a file
+    :param error_log: path to error log. ends with ".txt"
+    :param f: obj file name
+    :return:
+    """
+    with open(error_log, "a+") as e:
+        e.write(f)
+    return
+
+
 def main():
     # V=np.array([
     #     [1,0,0],
@@ -79,6 +91,13 @@ def main():
     out_dir = args.out_dir
     num_points = int(args.num_points)
 
+    error_log = os.path.join(out_dir, "error.txt")
+    try:
+        os.remove(error_log)
+    except OSError:
+        pass
+
+
     # find all .obj files
     all_files = os.listdir(in_dir)
     all_obj = [x for x in all_files if x[-4:] == ".obj"]
@@ -88,13 +107,14 @@ def main():
         if i % 1000 == 0:
             end = timer()
             print("Handling the {0}-th file. Time elapsed: {1:.3f} s".format(i, end - start))
-        print(f)
+        # print(f)
         in_path = os.path.join(in_dir, f)
         V, G = read_obj(in_path)
         try:
             P = tri2pts(V,G,num_points)
         except Exception as e:
             print(e)
+            log_error(error_log, f)
             continue
         out_path = os.path.join(out_dir, f.split(".")[0] + ".npy")
         np.save(out_path, np.array(P))

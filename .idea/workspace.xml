@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ed685d35-4534-48f6-aeb2-21ed90b03e4e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -11,12 +11,12 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file pinned="false" current-in-tab="true">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="304">
-              <caret line="87" column="4" selection-start-line="87" selection-start-column="4" selection-end-line="87" selection-end-column="4" />
+            <state relative-caret-position="312">
+              <caret line="113" column="19" lean-forward="true" selection-start-line="113" selection-start-column="19" selection-end-line="113" selection-end-column="19" />
               <folding>
                 <element signature="e#89#98#0" expanded="true" />
               </folding>
@@ -24,11 +24,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/_trimesh2pointcloud.pyx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="636">
-              <caret line="62" selection-start-line="62" selection-end-line="62" />
+            <state relative-caret-position="369">
+              <caret line="50" column="4" selection-start-line="50" selection-start-column="4" selection-end-line="50" selection-end-column="4" />
             </state>
           </provider>
         </entry>
@@ -140,19 +140,20 @@
       <option name="presentableId" value="Default" />
       <updated>1556472199656</updated>
       <workItem from="1556472203920" duration="2000" />
-      <workItem from="1556472214892" duration="1318000" />
+      <workItem from="1556472214892" duration="2506000" />
+      <workItem from="1556486045337" duration="614000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1320000" />
+    <option name="totallyTimeSpent" value="3122000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="-4" width="1855" height="1084" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4955414" visible="true" weight="0.19424461" />
-      <window_info id="Structure" order="1" sideWeight="0.5044586" side_tool="true" visible="true" weight="0.19424461" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49489796" visible="true" weight="0.19645822" />
+      <window_info id="Structure" order="1" sideWeight="0.50510204" side_tool="true" visible="true" weight="0.19645822" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
@@ -166,7 +167,7 @@
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="bottom" id="Terminal" order="11" />
-      <window_info anchor="bottom" id="Python Console" order="12" visible="true" weight="0.1981614" />
+      <window_info active="true" anchor="bottom" id="Python Console" order="12" visible="true" weight="0.19918284" />
       <window_info anchor="right" x="0" y="0" width="413" height="884" id="Documentation" order="0" side_tool="true" visible="true" weight="0.1793027" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="1" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="2" weight="0.25" />
@@ -193,20 +194,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/_trimesh2pointcloud.pyx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="636">
-          <caret line="62" selection-start-line="62" selection-end-line="62" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="87" column="4" selection-start-line="87" selection-start-column="4" selection-end-line="87" selection-end-column="4" />
+        <state relative-caret-position="312">
+          <caret line="113" column="19" lean-forward="true" selection-start-line="113" selection-start-column="19" selection-end-line="113" selection-end-column="19" />
           <folding>
             <element signature="e#89#98#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/_trimesh2pointcloud.pyx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="369">
+          <caret line="50" column="4" selection-start-line="50" selection-start-column="4" selection-end-line="50" selection-end-column="4" />
         </state>
       </provider>
     </entry>

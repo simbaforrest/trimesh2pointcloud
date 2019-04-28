@@ -107,7 +107,7 @@ def main():
         if i % 1000 == 0:
             end = timer()
             print("Handling the {0}-th file. Time elapsed: {1:.3f} s".format(i, end - start))
-        # print(f)
+        print(f)
         in_path = os.path.join(in_dir, f)
         V, G = read_obj(in_path)
         try:

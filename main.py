@@ -90,9 +90,14 @@ def main():
         if i % 1000 == 0:
             end = timer()
             print("Handling the {0}-th file. Time elapsed: {1:.3f} s".format(i, end - start))
+        print(f)
         in_path = os.path.join(in_dir, f)
         V, G = read_obj(in_path)
-        P = tri2pts(V,G,num_points)
+        try:
+            P = tri2pts(V,G,num_points)
+        except Exception as e:
+            print(e)
+            continue
         out_path = os.path.join(out_dir, f.split(".")[0] + ".npy")
         np.save(out_path, np.array(P))
     return

@@ -12,8 +12,6 @@ from timeit import default_timer as timer
 import argparse
 
 import numpy as np
-from matplotlib import pyplot as plt
-from mpl_toolkits.mplot3d.axes3d import Axes3D
 
 import pyximport; pyximport.install(inplace=True)
 from _trimesh2pointcloud import cy_trimesh2pointcloud as tri2pts

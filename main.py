@@ -13,7 +13,7 @@ import argparse
 
 import numpy as np
 
-import pyximport; pyximport.install(inplace=True)
+import pyximport; pyximport.install(inplace=True, reload_support=True)
 from _trimesh2pointcloud import cy_trimesh2pointcloud as tri2pts
 
 def strip_slash(str1):

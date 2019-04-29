@@ -17,6 +17,8 @@ import numpy as np
 import pyximport; pyximport.install(inplace=True, reload_support=True)
 from _trimesh2pointcloud import cy_trimesh2pointcloud as tri2pts
 import multiprocessing
+from timeit import default_timer as timer
+from datetime import timedelta
 
 def strip_slash(str1):
     slash_pos = str1.find('/')

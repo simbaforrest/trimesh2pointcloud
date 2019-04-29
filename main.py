@@ -132,6 +132,7 @@ def main():
             end = timer()
             print(f)
             print("Processed: {0}-th file. Time elapsed: {1} s.".format(counter, timedelta(seconds=end-start)))
+        counter += 1
 
         out_path = os.path.join(out_dir, f.split(".")[0] + ".npy")
         if os.path.exists(out_path):
@@ -166,7 +167,6 @@ def main():
             result = return_dict["res"]   # resulting point cloud
             np.save(out_path, np.array(result))
 
-        counter += 1
     return
 #    plt.figure()
 #    ax=plt.subplot(111,projection='3d')

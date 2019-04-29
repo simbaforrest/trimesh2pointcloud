@@ -54,16 +54,16 @@ def cy_trimesh2pointcloud(V, G, k):
     k2= int(k)
     # print("current k : {0}".format(k))
     # print("current k2 : {0}".format(k2))
-    while k2 <= 16384:
+    while k2 <= 8192:
         P = _cy_trimesh2pointcloud(V, G, k2)
-        print("current P.shape[0] {0}".format(P.shape[0]))
+        # print("current P.shape[0] {0}".format(P.shape[0]))
         if P.shape[0]<k:
             k2*=2
             # print("current k2 : {0}. Continue running...".format(k2))
         else:
-            print("Max P.shape[0] reached! Exit the loop...")
+            # print("Max P.shape[0] reached! Exit the loop...")
             break
-    if k2 > 16384:
+    if k2 > 8192:
         raise Exception("Potential problem! Sampling much more points than needed!")
     np.random.shuffle(P)
     return P[:k, :]

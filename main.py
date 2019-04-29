@@ -124,7 +124,11 @@ def main():
     all_obj = [x for x in all_files if x[-4:] == ".obj"]
 
     for i, f in enumerate(all_obj):
-        print(f)
+        # print(f)
+        out_path = os.path.join(out_dir, f.split(".")[0] + ".npy")
+        if os.path.exists(out_path):
+            continue
+
         in_path = os.path.join(in_dir, f)
         V, G = read_obj(in_path)
 
@@ -135,7 +139,7 @@ def main():
 
         overtime = False   # check overtime error
         try:
-            p.join(10)
+            p.join(3)
         except Exception as e:
             print(e)
             log_error(error_log, f)
@@ -152,7 +156,6 @@ def main():
             continue
         else:
             result = return_dict["res"]   # resulting point cloud
-            out_path = os.path.join(out_dir, f.split(".")[0] + ".npy")
             np.save(out_path, np.array(result))
     return
 #    plt.figure()

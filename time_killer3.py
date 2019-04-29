@@ -17,7 +17,7 @@ if __name__ == '__main__':
     p.start()
 
     # Wait for 10 seconds or until process finishes
-    p.join(10)
+    p.join(4)
 
     # If thread is still active
     if p.is_alive():
@@ -26,4 +26,4 @@ if __name__ == '__main__':
         # Terminate
         p.terminate()
         p.join()
-    print(return_dict.values())
+    # print(return_dict.values())

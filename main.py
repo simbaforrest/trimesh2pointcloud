@@ -16,9 +16,7 @@ import numpy as np
 
 import pyximport; pyximport.install(inplace=True, reload_support=True)
 from _trimesh2pointcloud import cy_trimesh2pointcloud as tri2pts
-import subprocess as sp
-from threading import Timer
-
+import multiprocessing
 
 def strip_slash(str1):
     slash_pos = str1.find('/')
@@ -59,10 +57,19 @@ def log_error(error_log, f):
         e.write(f)
     return
 
-# Register an handler for the timeout
-def handler(signum, frame):
-    print("Forever is over!")
-    raise Exception("end of time")
+
+def tri2pts_wrapper(V,G,num_points, return_dict):
+    """
+    a wrapper to pass the funciton tri2pts to the multiprocess manager
+    :param V:
+    :param G:
+    :param num_points:
+    :param return_dict:
+    :return:
+    """
+    P = tri2pts(V,G,num_points)
+    return_dict["res"] = P
+    return
 
 
 def main():
@@ -118,16 +125,26 @@ def main():
         print(f)
         in_path = os.path.join(in_dir, f)
         V, G = read_obj(in_path)
-        signal.signal(signal.SIGALRM, handler)
-        signal.alarm(10)
+
+        manager = multiprocessing.Manager()
+        return_dict = manager.dict()
+        p = multiprocessing.Process(target=tri2pts_wrapper, args=(V, G, num_points, return_dict))   # note the use of ,
+        p.start()
         try:
-            P = tri2pts(V,G,num_points)
+            p.join(10)
         except Exception as e:
             print(e)
             log_error(error_log, f)
             continue
+        if p.is_alive():
+            print("running overtime... let's kill it...")
+            # Terminate
+            p.terminate()
+            p.join()
+
+        result = return_dict["res"]   # resulting point cloud
         out_path = os.path.join(out_dir, f.split(".")[0] + ".npy")
-        np.save(out_path, np.array(P))
+        np.save(out_path, np.array(result))
     return
 #    plt.figure()
 #    ax=plt.subplot(111,projection='3d')

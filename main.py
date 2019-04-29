@@ -113,15 +113,17 @@ def main():
     except OSError:
         pass
 
+    ot_log = os.path.join(out_dir, "ot.txt")   # overtime log
+    try:
+        os.remove(ot_log)
+    except OSError:
+        pass
+
     # find all .obj files
     all_files = os.listdir(in_dir)
     all_obj = [x for x in all_files if x[-4:] == ".obj"]
 
-    start = timer()  # time it !
     for i, f in enumerate(all_obj):
-        if i % 1000 == 0:
-            end = timer()
-            print("Handling the {0}-th file. Time elapsed: {1:.3f} s".format(i, end - start))
         print(f)
         in_path = os.path.join(in_dir, f)
         V, G = read_obj(in_path)
@@ -130,6 +132,8 @@ def main():
         return_dict = manager.dict()
         p = multiprocessing.Process(target=tri2pts_wrapper, args=(V, G, num_points, return_dict))   # note the use of ,
         p.start()
+
+        overtime = False   # check overtime error
         try:
             p.join(10)
         except Exception as e:
@@ -137,14 +141,19 @@ def main():
             log_error(error_log, f)
             continue
         if p.is_alive():
+            overtime = True
             print("running overtime... let's kill it...")
             # Terminate
             p.terminate()
             p.join()
 
-        result = return_dict["res"]   # resulting point cloud
-        out_path = os.path.join(out_dir, f.split(".")[0] + ".npy")
-        np.save(out_path, np.array(result))
+        if overtime:   # the process has been killed
+            log_error(ot_log, f)
+            continue
+        else:
+            result = return_dict["res"]   # resulting point cloud
+            out_path = os.path.join(out_dir, f.split(".")[0] + ".npy")
+            np.save(out_path, np.array(result))
     return
 #    plt.figure()
 #    ax=plt.subplot(111,projection='3d')

@@ -20,12 +20,14 @@ import multiprocessing
 from timeit import default_timer as timer
 from datetime import timedelta
 
+
 def strip_slash(str1):
     slash_pos = str1.find('/')
     if slash_pos > -1:
         return int(str1[0:slash_pos])
     else:
         return int(str1)
+
 
 def read_obj(fname):
     with open(fname) as f:

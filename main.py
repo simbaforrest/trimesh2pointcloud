@@ -123,8 +123,14 @@ def main():
     all_files = os.listdir(in_dir)
     all_obj = [x for x in all_files if x[-4:] == ".obj"]
 
+    counter = 0
+    start = timer()
     for i, f in enumerate(all_obj):
-        # print(f)
+        if counter % 1000 == 0:
+            end = timer()
+            print(f)
+            print("Processed: {0}-th file. Time elapsed: {1} s.".format(counter, timedelta(seconds=end-start)))
+
         out_path = os.path.join(out_dir, f.split(".")[0] + ".npy")
         if os.path.exists(out_path):
             continue
@@ -139,7 +145,7 @@ def main():
 
         overtime = False   # check overtime error
         try:
-            p.join(3)
+            p.join(5)
         except Exception as e:
             print(e)
             log_error(error_log, f)
@@ -157,6 +163,8 @@ def main():
         else:
             result = return_dict["res"]   # resulting point cloud
             np.save(out_path, np.array(result))
+
+        counter += 1
     return
 #    plt.figure()
 #    ax=plt.subplot(111,projection='3d')

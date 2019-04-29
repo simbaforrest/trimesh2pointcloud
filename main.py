@@ -97,7 +97,6 @@ def main():
     except OSError:
         pass
 
-
     # find all .obj files
     all_files = os.listdir(in_dir)
     all_obj = [x for x in all_files if x[-4:] == ".obj"]

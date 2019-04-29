@@ -10,11 +10,15 @@ import sys
 import glob
 from timeit import default_timer as timer
 import argparse
+import signal
 
 import numpy as np
 
 import pyximport; pyximport.install(inplace=True, reload_support=True)
 from _trimesh2pointcloud import cy_trimesh2pointcloud as tri2pts
+import subprocess as sp
+from threading import Timer
+
 
 def strip_slash(str1):
     slash_pos = str1.find('/')
@@ -54,6 +58,11 @@ def log_error(error_log, f):
     with open(error_log, "a+") as e:
         e.write(f)
     return
+
+# Register an handler for the timeout
+def handler(signum, frame):
+    print("Forever is over!")
+    raise Exception("end of time")
 
 
 def main():
@@ -109,6 +118,8 @@ def main():
         print(f)
         in_path = os.path.join(in_dir, f)
         V, G = read_obj(in_path)
+        signal.signal(signal.SIGALRM, handler)
+        signal.alarm(10)
         try:
             P = tri2pts(V,G,num_points)
         except Exception as e:

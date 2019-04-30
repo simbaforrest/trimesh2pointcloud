@@ -134,7 +134,7 @@ def main():
     done_pcd = os.listdir(out_dir)
     done_obj = [x.split(".")[0]+".obj" for x in done_pcd if x[-4:] == ".npy"]
     # find obj files to do
-    todo_obj = list(set(all_obj) - done_obj)
+    todo_obj = list(set(all_obj) - set(done_obj))
 
     max_iters = int(len(todo_obj) / num_proc) + 1   # max iterations per process
 

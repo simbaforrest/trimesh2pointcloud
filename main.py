@@ -143,6 +143,7 @@ def main():
         if iter % 1000 == 0:
             end = timer()
             print("Iter: {0}. Time elapsed: {1} s.".format(iter, timedelta(seconds=end-start)))
+            print("Starting {0} threads...".format(num_proc))
 
         # multiprocess code starts
         manager = multiprocessing.Manager()
@@ -158,6 +159,7 @@ def main():
             p = multiprocessing.Process(target=tri2pts_wrapper, args=(i, V, G, num_points, return_dict))   # note the use of ,
             jobs.append(p)
             p.start()
+            print("P {} started!".format(i))
 
         for i in range(num_proc):
             # same calculation as before
@@ -174,9 +176,13 @@ def main():
             overtime = False   # check overtime error
             try:
                 proc.join(5)
+                print("P {} finished!".format(i))
             except Exception as e:
                 print(e)
                 log_error(error_log, f)
+                proc.terminate()
+                proc.join()
+                print("P {} finished!".format(i))
                 continue
             if proc.is_alive():
                 overtime = True
@@ -184,6 +190,7 @@ def main():
                 # Terminate
                 proc.terminate()
                 proc.join()
+                print("P {} finished!".format(i))
 
             if overtime:   # the process has been killed
                 log_error(ot_log, f)

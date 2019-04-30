@@ -62,9 +62,10 @@ def log_error(error_log, f):
     return
 
 
-def tri2pts_wrapper(V,G,num_points, return_dict):
+def tri2pts_wrapper(i, V,G,num_points, return_dict):
     """
     a wrapper to pass the funciton tri2pts to the multiprocess manager
+    :param i:
     :param V:
     :param G:
     :param num_points:
@@ -72,7 +73,7 @@ def tri2pts_wrapper(V,G,num_points, return_dict):
     :return:
     """
     P = tri2pts(V,G,num_points)
-    return_dict["res"] = P
+    return_dict[i]= P
     return
 
 
@@ -106,10 +107,13 @@ def main():
                    help="output directory of all .npy files ")
     p.add_argument("-n", "--num_points", default=2048,
                    help="number of points per point cloud")
+    p.add_argument("-p", "--num_proc", default=24,
+                   help="number of processes in multiprocess code")
     args = p.parse_args()
     in_dir = args.in_dir
     out_dir = args.out_dir
     num_points = int(args.num_points)
+    num_proc = int(args.num_proc)
 
     error_log = os.path.join(out_dir, "error.txt")
     try:
@@ -126,55 +130,69 @@ def main():
     # find all .obj files
     all_files = os.listdir(in_dir)
     all_obj = [x for x in all_files if x[-4:] == ".obj"]
+    # find all files that are done
+    done_pcd = os.listdir(out_dir)
+    done_obj = [x.split(".")[0]+".obj" for x in done_pcd if x[-4:] == ".npy"]
+    # find obj files to do
+    todo_obj = list(set(all_obj) - done_obj)
 
-    counter = 0
+    max_iters = int(len(todo_obj) / num_proc) + 1   # max iterations per process
+
     start = timer()
-    for i, f in enumerate(all_obj):
-        if counter % 1000 == 0:
+    for iter in range(max_iters):
+        if iter % 1000 == 0:
             end = timer()
-            print(f)
-            print("Processed: {0}-th file. Time elapsed: {1} s.".format(counter, timedelta(seconds=end-start)))
-        counter += 1
+            print("Iter: {0}. Time elapsed: {1} s.".format(iter, timedelta(seconds=end-start)))
 
-        out_path = os.path.join(out_dir, f.split(".")[0] + ".npy")
-        if os.path.exists(out_path):
-            continue
-
-        in_path = os.path.join(in_dir, f)
-        V, G = read_obj(in_path)
-
+        # multiprocess code starts
         manager = multiprocessing.Manager()
         return_dict = manager.dict()
-        p = multiprocessing.Process(target=tri2pts_wrapper, args=(V, G, num_points, return_dict))   # note the use of ,
-        p.start()
+        jobs = []
+        for i in range(num_proc):
+            curr_id = iter * num_proc + i   # index of file to read this round in the todo_obj list
+            if curr_id >= len(todo_obj):
+                break    # stop! We finished all files
+            f = todo_obj[curr_id]
+            in_path = os.path.join(in_dir, f)
+            V, G = read_obj(in_path)
+            p = multiprocessing.Process(target=tri2pts_wrapper, args=(i, V, G, num_points, return_dict))   # note the use of ,
+            jobs.append(p)
+            p.start()
 
-        overtime = False   # check overtime error
-        try:
-            p.join(5)
-        except Exception as e:
-            print(e)
-            log_error(error_log, f)
-            continue
-        if p.is_alive():
-            overtime = True
-            print("running overtime... let's kill it...")
-            # Terminate
-            p.terminate()
-            p.join()
+        for i in range(num_proc):
+            # same calculation as before
+            curr_id = iter * num_proc + i   # index of file to read this round in the todo_obj list
+            if curr_id >= len(todo_obj):
+                break    # stop! We finished all files
+            f = todo_obj[curr_id]
+            out_path = os.path.join(out_dir, f.split(".")[0] + ".npy")
+            if os.path.exists(out_path):
+                continue
 
-        if overtime:   # the process has been killed
-            log_error(ot_log, f)
-            continue
-        else:
-            result = return_dict["res"]   # resulting point cloud
-            np.save(out_path, np.array(result))
+            proc = jobs[i]
 
+            overtime = False   # check overtime error
+            try:
+                proc.join(5)
+            except Exception as e:
+                print(e)
+                log_error(error_log, f)
+                continue
+            if proc.is_alive():
+                overtime = True
+                print("running overtime... let's kill it...")
+                # Terminate
+                proc.terminate()
+                proc.join()
+
+            if overtime:   # the process has been killed
+                log_error(ot_log, f)
+                continue
+            else:
+                result = return_dict[i]   # resulting point cloud
+                np.save(out_path, np.array(result))
     return
-#    plt.figure()
-#    ax=plt.subplot(111,projection='3d')
-#    ax.plot(V[:,0],V[:,1],V[:,2],'b.')
-#    ax.plot(P[:,0],P[:,1],P[:,2],'r.')
-#    plt.show()
+
 
 if __name__ == '__main__':
     main()
